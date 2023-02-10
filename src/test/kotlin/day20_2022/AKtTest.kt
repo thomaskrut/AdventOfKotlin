@@ -30,5 +30,11 @@ internal class AKtTest {
 
         assertEquals(list, expectedResult)
 
+        list.move(6)
+
+        expectedResult = mutableListOf(2, -1, 9, 2, -4, 3, 8)
+
+        assertEquals(list, expectedResult)
+
     }
 }
