@@ -8,6 +8,17 @@ import org.junit.jupiter.api.Assertions.*
 internal class AKtTest {
 
     @Test
+    fun testMoveAoCExample() {
+
+        var list : MutableList<Int> = mutableListOf(1, 2, -3, 3, -2, 0, 4)
+
+        repeat(list.size - 1) {
+            list.move(it)
+        }
+        var expectedResult: MutableList<Int> = mutableListOf(1, 2, -3, 4, 0, 3, -2)
+        assertEquals(list, expectedResult)
+    }
+    @Test
     fun testMove() {
 
         var list : MutableList<Int> = mutableListOf(3, -4, -1, 2, 8, 9, 2)
