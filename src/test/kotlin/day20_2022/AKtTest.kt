@@ -1,51 +1,34 @@
 package day20_2022
 
-import move
+import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.Test
-
-import org.junit.jupiter.api.Assertions.*
 
 internal class AKtTest {
 
     @Test
     fun testMoveAoCExample() {
 
-        var list : MutableList<Int> = mutableListOf(1, 2, -3, 3, -2, 0, 4)
+        var intList: MutableList<Int> = mutableListOf(1, 2, -3, 3, -2, 0, 4)
+        var intResultList: MutableList<Int> = mutableListOf(1, 2, -3, 4, 0, 3, -2)
 
-        repeat(list.size - 1) {
-            list.move(it)
-        }
-        var expectedResult: MutableList<Int> = mutableListOf(1, 2, -3, 4, 0, 3, -2)
-        assertEquals(list, expectedResult)
-    }
-    @Test
-    fun testMove() {
+        var list: MutableList<Element> = MutableList(intList.size) { Element(it, intList[it]) }
+        var expectedResult: MutableList<Element> = MutableList(intResultList.size) { Element(it, intResultList[it]) }
 
-        var list : MutableList<Int> = mutableListOf(3, -4, -1, 2, 8, 9, 2)
+        list.sortedWith(compareBy {it.index}).forEach {e -> list.move(list.indexOf(e))}
 
-        var expectedResult: MutableList<Int> = mutableListOf(-4, -1, 2, 3, 8, 9, 2)
+        list.forEach{e -> print(e.value)}
+        println()
+        expectedResult.forEach{e -> print(e.value)}
 
-        list.move(0)
+        intList.clear()
 
-        assertEquals(list, expectedResult)
+        list.forEach{e -> intList.add(e.value)}
 
-        list.move(6)
+        assertEquals(intList, intResultList)
 
-        expectedResult = mutableListOf(-4, 2, -1, 2, 3, 8, 9)
 
-        assertEquals(list, expectedResult)
-
-        list.move(0)
-
-        expectedResult = mutableListOf(2, -1, 2, -4, 3, 8, 9)
-
-        assertEquals(list, expectedResult)
-
-        list.move(6)
-
-        expectedResult = mutableListOf(2, 9, -1, 2, -4, 3, 8)
-
-        assertEquals(list, expectedResult)
 
     }
 }
+
+
