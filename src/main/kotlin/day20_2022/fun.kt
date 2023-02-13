@@ -19,12 +19,13 @@ fun MutableList<Element>.move(index: Int) {
     var elementToMove: Element
     var newIndex: Int
 
-    println("Index: ${this[index].index}")
+    //println("Index: ${this[index].index}")
     println(abs(this[index].value))
     println(abs(this[index].value.toDouble()).toLong())
-    println(abs(this[index].value.toDouble()).toLong() % 4999L)
+    println(abs(this[index].value.toDouble()).toLong() % (this.size.toLong() - 1))
 
-    val n = (abs(this[index].value.toDouble()).toLong() % 4999L).toInt()
+    val n = (abs(this[index].value.toDouble()).toLong() % (this.size.toLong() - 1)).toInt()
+
 
     println(n)
 
@@ -37,19 +38,30 @@ fun MutableList<Element>.move(index: Int) {
 
 
 
-        if (moveOneStep == 1 && newIndex >= this.size) {
+        if (moveOneStep == 1 && newIndex > this.size) {
+
+            newIndex = 1
+        }
+
+        if (moveOneStep == 1 && newIndex == this.size) {
 
             newIndex = 0
         }
 
-        if (moveOneStep == -1 && newIndex <= 0) {
+
+        if (moveOneStep == -1 && newIndex < 0) {
+
+            newIndex = this.size - 1
+        }
+
+        if (moveOneStep == -1 && newIndex == 0) {
 
             newIndex = this.size
         }
 
         this.add(newIndex, elementToMove)
 
-        print("$currentIndex->$newIndex | ")
+        //print("$currentIndex->$newIndex | ")
 
         currentIndex = newIndex
 
