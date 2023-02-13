@@ -1,4 +1,5 @@
 import java.io.File
+import java.util.*
 
 object Minerals {
 
@@ -28,7 +29,53 @@ object Blueprint {
 fun main() {
 
     val stringList = File("src/main/kotlin/day19_2022", "input.txt").readLines()
-    println()
+
+
+
+    for ((n, s) in stringList.withIndex()) {
+
+        var currentBlueprint = n +1
+
+        var scan = Scanner(s)
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        scan.nextInt()
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        Blueprint.oreForClayRobot = scan.nextInt()
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        Blueprint.oreForObsidianRobot = scan.nextInt()
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        Blueprint.clayForObsidianRobot = scan.nextInt()
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        Blueprint.oreForGeodeRobot = scan.nextInt()
+
+        while(!scan.hasNextInt()) {
+            scan.next()
+        }
+        Blueprint.obsidianForGeodeRobot = scan.nextInt()
+
+    }
+
+
+    println(Blueprint.oreForClayRobot)
+    println(Blueprint.oreForObsidianRobot)
+    println(Blueprint.clayForObsidianRobot)
+    println(Blueprint.oreForGeodeRobot)
+    println(Blueprint.obsidianForGeodeRobot)
 
 }
 
@@ -42,8 +89,8 @@ class OreRobot : Robot {
         Minerals.ore++
     }
 
-    override fun manufacture(): Robot {
-        return ClayRobot()
+    override fun manufacture(): Robot? {
+        return if (Minerals.ore >= Blueprint.oreForClayRobot) ClayRobot() else null
     }
 
 }
@@ -53,8 +100,8 @@ class ClayRobot : Robot {
         Minerals.clay++
     }
 
-    override fun manufacture(): Robot {
-        return ObsidianRobot()
+    override fun manufacture(): Robot? {
+        return if (Minerals.ore >= Blueprint.oreForObsidianRobot && Minerals.clay >= Blueprint.clayForObsidianRobot) ObsidianRobot() else null
     }
 
 }
@@ -64,8 +111,8 @@ class ObsidianRobot : Robot {
         Minerals.obsidian++
     }
 
-    override fun manufacture(): Robot {
-        return GeodeRobot()
+    override fun manufacture(): Robot? {
+        return if (Minerals.ore >= Blueprint.oreForGeodeRobot && Minerals.clay >= Blueprint.obsidianForGeodeRobot) GeodeRobot() else null
     }
 
 }
