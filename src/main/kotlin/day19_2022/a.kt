@@ -2,8 +2,9 @@ package day19_2022
 
 import java.io.File
 import java.util.*
+import kotlin.math.min
 
-object Minerals {
+class Minerals {
 
     var ore = 0
     var clay = 0
@@ -16,9 +17,14 @@ object Minerals {
         obsidian = 0
         geode = 0
     }
+
+    override fun toString() : String {
+        return "$ore $clay $obsidian $geode"
+    }
+
 }
 
-object Blueprint {
+class Blueprint {
 
     var currentBlueprint = 0
     var oreForClayRobot = 0
@@ -26,6 +32,10 @@ object Blueprint {
     var clayForObsidianRobot = 0
     var oreForGeodeRobot = 0
     var obsidianForGeodeRobot = 0
+
+    override fun toString() : String {
+        return "$currentBlueprint $oreForClayRobot $oreForObsidianRobot $clayForObsidianRobot $oreForGeodeRobot $obsidianForGeodeRobot"
+    }
 
 }
 
@@ -37,9 +47,11 @@ fun main() {
 
     for ((n, s) in stringList.withIndex()) {
 
-        Minerals.clear()
+        val minerals = Minerals()
 
-        Blueprint.currentBlueprint = n + 1
+        val blueprint = Blueprint()
+
+        blueprint.currentBlueprint = n + 1
 
         var scan = Scanner(s)
 
@@ -51,34 +63,37 @@ fun main() {
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        Blueprint.oreForClayRobot = scan.nextInt()
+        blueprint.oreForClayRobot = scan.nextInt()
 
 
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        Blueprint.oreForObsidianRobot = scan.nextInt()
+        blueprint.oreForObsidianRobot = scan.nextInt()
 
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        Blueprint.clayForObsidianRobot = scan.nextInt()
+        blueprint.clayForObsidianRobot = scan.nextInt()
 
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        Blueprint.oreForGeodeRobot = scan.nextInt()
+        blueprint.oreForGeodeRobot = scan.nextInt()
 
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        Blueprint.obsidianForGeodeRobot = scan.nextInt()
+        blueprint.obsidianForGeodeRobot = scan.nextInt()
 
         var max = 0
 
+        println(minerals.toString())
+        println(blueprint.toString())
+
         repeat(300000) {
 
-            Minerals.clear()
+            minerals.clear()
 
             //println(Minerals.geode)
 
@@ -88,11 +103,11 @@ fun main() {
 
             repeat(24) {
 
-                var robot = manufacture()
+                var robot = manufacture(minerals, blueprint)
 
                 for (r in robots) {
 
-                    r.mine()
+                    r.mine(minerals)
 
                 }
 
@@ -100,13 +115,13 @@ fun main() {
 
             }
 
-            if (Minerals.geode > max) max = Minerals.geode
+            if (minerals.geode > max) max = minerals.geode
 
         }
 
-        print("${Blueprint.currentBlueprint}: ")
+        print("${blueprint.currentBlueprint}: ")
         println(max)
-        total = (total + (Blueprint.currentBlueprint * max))
+        total = (total + (blueprint.currentBlueprint * max))
 
     }
     println()
@@ -115,22 +130,22 @@ fun main() {
 
 }
 
-fun manufacture(): Robot? {
+fun manufacture(minerals : Minerals, blueprint: Blueprint): Robot? {
 
-    return if (Minerals.ore >= Blueprint.oreForGeodeRobot && Minerals.obsidian >= Blueprint.obsidianForGeodeRobot) GeodeRobot()
-    else if (Minerals.ore >= Blueprint.oreForObsidianRobot && Minerals.clay >= Blueprint.clayForObsidianRobot) ObsidianRobot()
-        else if (Minerals.ore >= Blueprint.oreForClayRobot) ClayRobot() else null
+    return if (minerals.ore >= blueprint.oreForGeodeRobot && minerals.obsidian >= blueprint.obsidianForGeodeRobot) GeodeRobot(minerals, blueprint)
+    else if (minerals.ore >= blueprint.oreForObsidianRobot && minerals.clay >= blueprint.clayForObsidianRobot) ObsidianRobot(minerals, blueprint)
+        else if ((1..5).random() == 1 && minerals.ore >= blueprint.oreForClayRobot) ClayRobot(minerals, blueprint) else null
 
 }
 
 interface Robot {
-    fun mine()
+    fun mine(minerals: Minerals)
 
 }
 
 class OreRobot : Robot {
-    override fun mine() {
-        Minerals.ore++
+    override fun mine(minerals: Minerals) {
+        minerals.ore++
 
     }
 
@@ -138,15 +153,15 @@ class OreRobot : Robot {
 
 }
 
-class ClayRobot : Robot {
+class ClayRobot(minerals : Minerals, blueprint: Blueprint) : Robot {
 
     init {
-        Minerals.ore = Minerals.ore - Blueprint.oreForClayRobot
+        minerals.ore = minerals.ore - blueprint.oreForClayRobot
 
     }
 
-    override fun mine() {
-        Minerals.clay++
+    override fun mine(minerals: Minerals) {
+        minerals.clay++
 
     }
 
@@ -154,16 +169,16 @@ class ClayRobot : Robot {
 
 }
 
-class ObsidianRobot : Robot {
+class ObsidianRobot(minerals : Minerals, blueprint: Blueprint) : Robot {
 
     init {
-        Minerals.ore = Minerals.ore - Blueprint.oreForObsidianRobot
-        Minerals.clay = Minerals.clay - Blueprint.clayForObsidianRobot
+        minerals.ore = minerals.ore - blueprint.oreForObsidianRobot
+        minerals.clay = minerals.clay - blueprint.clayForObsidianRobot
 
     }
 
-    override fun mine() {
-        Minerals.obsidian++
+    override fun mine(minerals : Minerals) {
+        minerals.obsidian++
 
     }
 
@@ -171,16 +186,16 @@ class ObsidianRobot : Robot {
 
 }
 
-class GeodeRobot : Robot {
+class GeodeRobot(minerals : Minerals, blueprint: Blueprint) : Robot {
 
     init {
-        Minerals.ore = Minerals.ore - Blueprint.oreForGeodeRobot
-        Minerals.obsidian = Minerals.obsidian - Blueprint.obsidianForGeodeRobot
+        minerals.ore = minerals.ore - blueprint.oreForGeodeRobot
+        minerals.obsidian = minerals.obsidian - blueprint.obsidianForGeodeRobot
 
     }
 
-    override fun mine() {
-        Minerals.geode++
+    override fun mine(minerals : Minerals) {
+        minerals.geode++
 
     }
 
