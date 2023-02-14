@@ -17,22 +17,15 @@ data class Droplet(val x: Int, val y: Int, val z: Int) {
     fun isAdjacent(input: Droplet, list: List<Droplet>): Boolean {
 
         if ((input.x == this.x) && (input.y == this.y)) {
-            if ((input.z == this.z + 1) || (input.z == this.z - 1)) {
-
-                if (checkForAir(1, dirz = +1, list = list) == 50 && (checkForAir(1, dirz = -1, list = list) == 50)) return true
-            }
+            if ((input.z == this.z + 1) || (input.z == this.z - 1)) return true
         }
 
         if ((input.x == this.x) && (input.z == this.z)) {
-            if ((input.y == this.y + 1) || (input.y == this.y - 1)) {
-                if (checkForAir(1, diry = +1, list = list) == 50 && (checkForAir(1, diry = -1, list = list) == 50)) return true
-            }
+            if ((input.y == this.y + 1) || (input.y == this.y - 1)) return true
         }
 
         if ((input.z == this.z) && (input.y == this.y)) {
-            if ((input.x == this.x + 1) || (input.x == this.x - 1)) {
-                if (checkForAir(1, dirx = +1, list = list) == 50 && (checkForAir(1, dirx = -1, list = list) == 50)) return true
-            }
+            if ((input.x == this.x + 1) || (input.x == this.x - 1)) return true
         }
 
         return false
@@ -47,6 +40,7 @@ fun counterNumberOfExposedSides(droplet: Droplet, list: List<Droplet>): Int {
 
     list.forEach {
         if (droplet.isAdjacent(it, list)) result++
+
     }
 
     return 6 - result

@@ -19,7 +19,7 @@ internal class AKtTest {
         }
 
 
-        assertTrue(Droplet(1,1,1).isAdjacent(Droplet(1,1,0)))
+        assertTrue(Droplet(1,1,1).isAdjacent(Droplet(1,1,0), droplets))
 
 
         val j = droplets.sumOf { d -> counterNumberOfExposedSides(d, droplets)}
