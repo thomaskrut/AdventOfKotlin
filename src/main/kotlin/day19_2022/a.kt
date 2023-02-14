@@ -2,7 +2,6 @@ package day19_2022
 
 import java.io.File
 import java.util.*
-import kotlin.math.min
 
 class Minerals {
 
@@ -26,12 +25,16 @@ class Minerals {
 
 class Blueprint {
 
+    var oreForOreRobot = 0
     var currentBlueprint = 0
     var oreForClayRobot = 0
     var oreForObsidianRobot = 0
     var clayForObsidianRobot = 0
     var oreForGeodeRobot = 0
     var obsidianForGeodeRobot = 0
+
+    var numberOfObsidianRobots = 0
+    var maxNumberOfClayRobots = 0
 
     override fun toString() : String {
         return "$currentBlueprint $oreForClayRobot $oreForObsidianRobot $clayForObsidianRobot $oreForGeodeRobot $obsidianForGeodeRobot"
@@ -41,7 +44,7 @@ class Blueprint {
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day19_2022", "inputtest.txt").readLines()
+    val stringList = File("src/main/kotlin/day19_2022", "input.txt").readLines()
 
     var total = 0
 
@@ -58,7 +61,7 @@ fun main() {
         while (!scan.hasNextInt()) {
             scan.next()
         }
-        scan.nextInt()
+        blueprint.oreForOreRobot = scan.nextInt()
 
         while (!scan.hasNextInt()) {
             scan.next()
@@ -91,15 +94,18 @@ fun main() {
         println(minerals.toString())
         println(blueprint.toString())
 
-        repeat(300000) {
+        repeat(2000000) {
 
-            minerals.clear()
+
+
 
             //println(Minerals.geode)
 
             val robots = mutableListOf<Robot>()
 
-            robots.add(OreRobot())
+            robots.add(OreRobot(minerals, blueprint))
+
+            minerals.clear()
 
             repeat(24) {
 
@@ -134,7 +140,10 @@ fun manufacture(minerals : Minerals, blueprint: Blueprint): Robot? {
 
     return if (minerals.ore >= blueprint.oreForGeodeRobot && minerals.obsidian >= blueprint.obsidianForGeodeRobot) GeodeRobot(minerals, blueprint)
     else if (minerals.ore >= blueprint.oreForObsidianRobot && minerals.clay >= blueprint.clayForObsidianRobot) ObsidianRobot(minerals, blueprint)
-        else if ((1..5).random() == 1 && minerals.ore >= blueprint.oreForClayRobot) ClayRobot(minerals, blueprint) else null
+        else if ((0..3).random() == 1 && minerals.ore >= blueprint.oreForClayRobot) ClayRobot(minerals, blueprint)
+        else if ((0..5).random() == 1 && minerals.ore >= blueprint.oreForOreRobot) OreRobot(minerals, blueprint)
+            else return null
+
 
 }
 
@@ -143,7 +152,11 @@ interface Robot {
 
 }
 
-class OreRobot : Robot {
+class OreRobot(minerals : Minerals, blueprint: Blueprint) : Robot {
+
+    init {
+        minerals.ore = minerals.ore - blueprint.oreForOreRobot
+    }
     override fun mine(minerals: Minerals) {
         minerals.ore++
 
@@ -157,6 +170,7 @@ class ClayRobot(minerals : Minerals, blueprint: Blueprint) : Robot {
 
     init {
         minerals.ore = minerals.ore - blueprint.oreForClayRobot
+
 
     }
 

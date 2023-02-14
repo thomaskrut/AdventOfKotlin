@@ -1,7 +1,6 @@
 package day25_2022
 
 import java.io.File
-import java.rmi.UnexpectedException
 import kotlin.math.pow
 
 fun randomSnafuDigit(): Char {
@@ -35,7 +34,7 @@ fun Long.toSnafu(): String {
     var result: Long
 
     repeat(300000000) {
-        testString = randomSnafuNumber(this.toString().length + 5)
+        testString = randomSnafuNumber(this.toString().length + 2)
         result = testString.toDecimal()
         if (result == this) return testString
     }
@@ -71,19 +70,28 @@ fun String.toDecimal(): Long {
     return result
 }
 
-fun testIntegerDivision(dec: Long) {
+fun Long.toSnafu2(): String =
+    generateSequence(this) { (it + 2) / 5 }
+        .takeWhile { it != 0L }
+        .map { "012=-"[(it % 5).toInt()] }
+        .joinToString("")
+        .reversed()
 
-    var result = dec / 5
-    var remainder = dec % 5
+fun testIntegerDivision(input: Long) {
+
+    var result = (input + 2) / 5
+    var remainder = input % 5
+    var s = ""
 
     while (result > 0) {
-        println(result)
-        println(remainder)
+
+        s += ("012=-"[remainder.toInt()])
         remainder = result % 5
-        result = result / 5
+        result = (result + 2) / 5
 
     }
 
+println(s.reversed())
 
 }
 
@@ -100,6 +108,9 @@ fun main() {
     println("Summa: $sum")
     println()
     println(testIntegerDivision(sum))
+    println(sum.toSnafu2())
+
+    //println(testIntegerDivision(4890))
 
 
 
