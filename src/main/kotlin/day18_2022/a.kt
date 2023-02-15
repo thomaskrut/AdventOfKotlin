@@ -1,7 +1,8 @@
 import java.io.File
 
+var filledPoints = mutableListOf<Point>()
 
-var totalListOfEmptyPoints = mutableListOf<Point>()
+var outerSurfaces = 0
 
 data class Point(val x: Int, val y: Int, val z: Int) {
 
@@ -22,27 +23,6 @@ data class Point(val x: Int, val y: Int, val z: Int) {
         return false
 
     }
-
-}
-
-fun countNumberOfExposedSides(droplet: Point, listOfDroplets: List<Point>): Int {
-
-    var result = 0
-
-    listOfDroplets.forEach {
-        if (droplet.isAdjacent(it, listOfDroplets)) result++
-
-    }
-
-    return 6 - result
-
-}
-
-fun getAdjacentDroplets(droplet: Point, listOfDroplets: List<Point>): List<Point> {
-
-    return listOfDroplets.filter { d ->
-        d.isAdjacent(droplet, listOfDroplets)
-    }.toList()
 
 }
 
@@ -94,63 +74,36 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
     )
     println(droplet)
 
-    val i = listOfEmptyPoints.filter { p -> checkIfOnSurface(p, listOfDroplets) }
-
-    return i
+    return listOfEmptyPoints
 
 }
 
-fun checkIfOnSurface(point: Point, listOfDroplets: List<Point>): Boolean {
+tailrec fun fillWithWater(currentPoint: Point, listOfDroplets: List<Point>) {
+
+    if (listOfDroplets.contains(currentPoint)) {
+        println("droplet")
+        outerSurfaces++
+        return
+    }
+
+    if (filledPoints.contains(currentPoint)) {
+        println("already visited")
+        return
+    }
+
+    filledPoints.add(currentPoint)
+
+    println(currentPoint)
 
 
-    totalListOfEmptyPoints.clear()
-    val result = expand(1, 50, point, listOfDroplets)
-    println(result)
-    return (result == 50)
+    if (currentPoint.x > 0) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), listOfDroplets)
+    if (currentPoint.x < 21) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), listOfDroplets)
+    if (currentPoint.y > 0) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), listOfDroplets)
+    if (currentPoint.y < 21) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), listOfDroplets)
+    if (currentPoint.z > 0) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1), listOfDroplets)
+    if (currentPoint.z < 21) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), listOfDroplets)
 
 }
-
-tailrec fun expand(step: Int, maxStep: Int, point: Point, listOfDroplets: List<Point>): Int {
-
-    if (step == maxStep) {
-
-        return step
-    }
-    var dirx: Int
-    var diry: Int
-    var dirz: Int
-
-    var listOfNewPoints = mutableListOf<Point>()
-
-    for (x in 1..6) {
-        dirx = 0; diry = 0; dirz = 0
-        when (x) {
-            1 -> dirx = 1
-            2 -> dirx = -1
-            3 -> diry = 1
-            4 -> diry = -1
-            5 -> dirz = 1
-            6 -> dirz = -1
-        }
-
-        val newPoint = Point(point.x + dirx, point.y + diry, point.z + dirz)
-
-        if (!(listOfDroplets.contains(newPoint)) && !(totalListOfEmptyPoints.contains(newPoint))) listOfNewPoints.add(newPoint)
-
-    }
-
-    if (listOfNewPoints.isNotEmpty()) {
-        totalListOfEmptyPoints.addAll(listOfNewPoints)
-
-        for (p in listOfNewPoints) {
-            expand(step + 1, maxStep, p, listOfDroplets)
-        }
-    }
-
-    return step
-
-}
-
 
 fun main() {
 
@@ -162,8 +115,15 @@ fun main() {
     }
 
     val totalNumberOfExposedSides = droplets.sumOf { d -> getAdjacentEmptyPoints(d, droplets).size }
-
+    println()
     println(totalNumberOfExposedSides)
+
+    println()
+
+    fillWithWater(Point(0, 0, 0), droplets)
+
+
+    println(outerSurfaces)
 
 
 }
