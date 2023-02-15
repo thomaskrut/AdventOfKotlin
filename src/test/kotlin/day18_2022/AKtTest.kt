@@ -3,6 +3,7 @@ package day18_2022
 import Point
 
 import countNumberOfExposedSides
+import getAdjacentEmptyPoints
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.Test
 import java.io.File
@@ -20,10 +21,10 @@ internal class AKtTest {
         }
 
 
-        assertTrue(Point(1,1,1).isAdjacent(Point(1,1,0), droplets))
+        assertTrue(Point(1, 1, 1).isAdjacent(Point(1, 1, 0), droplets))
 
 
-        val j = droplets.sumOf { d -> countNumberOfExposedSides(d, droplets)}
+        val j = droplets.sumOf { d -> getAdjacentEmptyPoints(d, droplets).size }
 
         assertEquals(j, 64)
 

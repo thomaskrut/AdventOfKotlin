@@ -1,5 +1,9 @@
 import java.io.File
 
+
+
+var totalListOfEmptyPoints = mutableListOf<Point>()
+
 data class Point(val x: Int, val y: Int, val z: Int) {
 
     fun isAdjacent(input: Point, list: List<Point>): Boolean {
@@ -47,16 +51,74 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
 
     var listOfEmptyPoints = mutableListOf<Point>()
 
-    if (!droplet.isAdjacent(Point(droplet.x + 1, droplet.y, droplet.z), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x + 1, droplet.y, droplet.z))
-    if (!droplet.isAdjacent(Point(droplet.x - 1, droplet.y, droplet.z), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x - 1, droplet.y, droplet.z))
-    if (!droplet.isAdjacent(Point(droplet.x, droplet.y + 1, droplet.z), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x, droplet.y + 1, droplet.z))
-    if (!droplet.isAdjacent(Point(droplet.x, droplet.y - 1, droplet.z), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x, droplet.y - 1, droplet.z))
-    if (!droplet.isAdjacent(Point(droplet.x, droplet.y, droplet.z + 1), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x, droplet.y, droplet.z + 1))
-    if (!droplet.isAdjacent(Point(droplet.x, droplet.y, droplet.z - 1), listOfDroplets)) listOfEmptyPoints.add(Point(droplet.x, droplet.y, droplet.z - 1))
-    return listOfEmptyPoints
+    if (!listOfDroplets.contains(Point(droplet.x + 1, droplet.y, droplet.z))) listOfEmptyPoints.add(
+        Point(
+            droplet.x + 1,
+            droplet.y,
+            droplet.z
+        )
+    )
+    if (!listOfDroplets.contains(Point(droplet.x - 1, droplet.y, droplet.z))) listOfEmptyPoints.add(
+        Point(
+            droplet.x - 1,
+            droplet.y,
+            droplet.z
+        )
+    )
+    if (!listOfDroplets.contains(Point(droplet.x, droplet.y + 1, droplet.z))) listOfEmptyPoints.add(
+        Point(
+            droplet.x,
+            droplet.y + 1,
+            droplet.z
+        )
+    )
+    if (!listOfDroplets.contains(Point(droplet.x, droplet.y - 1, droplet.z))) listOfEmptyPoints.add(
+        Point(
+            droplet.x,
+            droplet.y - 1,
+            droplet.z
+        )
+    )
+    if (!listOfDroplets.contains(Point(droplet.x, droplet.y, droplet.z + 1))) listOfEmptyPoints.add(
+        Point(
+            droplet.x,
+            droplet.y,
+            droplet.z + 1
+        )
+    )
+    if (!listOfDroplets.contains(Point(droplet.x, droplet.y, droplet.z - 1))) listOfEmptyPoints.add(
+        Point(
+            droplet.x,
+            droplet.y,
+            droplet.z - 1
+        )
+    )
+    return listOfEmptyPoints.filter { p -> checkIfOnSurface(p, listOfDroplets)}
 
 }
 
+fun checkIfOnSurface(point: Point, listOfDroplets: List<Point>): Boolean {
+
+    return (expand(1, point, listOfDroplets) == 500)
+
+}
+
+fun expand(step: Int, point: Point, listOfDroplets: List<Point>, ): Int {
+
+
+    if (step == 2) return step
+    val listOfEmptyPoints = getAdjacentEmptyPoints(point, listOfDroplets).filter { p -> !totalListOfEmptyPoints.contains(p) }
+    if (listOfEmptyPoints.isEmpty()) return step
+    listOfEmptyPoints.forEach {
+        totalListOfEmptyPoints.add(it)
+    }
+    listOfEmptyPoints.forEach {
+        return expand(step + 1, it, listOfDroplets)
+    }
+
+   return step
+
+}
 
 
 fun main() {
@@ -68,7 +130,7 @@ fun main() {
         Point(x, y, z)
     }
 
-    val totalNumberOfExposedSides = droplets.sumOf { d -> countNumberOfExposedSides(d, droplets) }
+    val totalNumberOfExposedSides = droplets.sumOf { d -> getAdjacentEmptyPoints(d, droplets).size }
 
     println(totalNumberOfExposedSides)
 
