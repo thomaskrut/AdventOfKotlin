@@ -1,7 +1,6 @@
 import java.io.File
 
 
-
 var totalListOfEmptyPoints = mutableListOf<Point>()
 
 data class Point(val x: Int, val y: Int, val z: Int) {
@@ -93,37 +92,69 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
             droplet.z - 1
         )
     )
-    return listOfEmptyPoints.filter { p -> checkIfOnSurface(p, listOfDroplets)}
+    println(droplet)
+
+    val i = listOfEmptyPoints.filter { p -> checkIfOnSurface(p, listOfDroplets) }
+
+    return i
 
 }
 
 fun checkIfOnSurface(point: Point, listOfDroplets: List<Point>): Boolean {
 
-    return (expand(1, point, listOfDroplets) == 500)
+
+    totalListOfEmptyPoints.clear()
+    val result = expand(1, 50, point, listOfDroplets)
+    println(result)
+    return (result == 50)
 
 }
 
-fun expand(step: Int, point: Point, listOfDroplets: List<Point>, ): Int {
+tailrec fun expand(step: Int, maxStep: Int, point: Point, listOfDroplets: List<Point>): Int {
 
+    if (step == maxStep) {
 
-    if (step == 2) return step
-    val listOfEmptyPoints = getAdjacentEmptyPoints(point, listOfDroplets).filter { p -> !totalListOfEmptyPoints.contains(p) }
-    if (listOfEmptyPoints.isEmpty()) return step
-    listOfEmptyPoints.forEach {
-        totalListOfEmptyPoints.add(it)
+        return step
     }
-    listOfEmptyPoints.forEach {
-        return expand(step + 1, it, listOfDroplets)
+    var dirx: Int
+    var diry: Int
+    var dirz: Int
+
+    var listOfNewPoints = mutableListOf<Point>()
+
+    for (x in 1..6) {
+        dirx = 0; diry = 0; dirz = 0
+        when (x) {
+            1 -> dirx = 1
+            2 -> dirx = -1
+            3 -> diry = 1
+            4 -> diry = -1
+            5 -> dirz = 1
+            6 -> dirz = -1
+        }
+
+        val newPoint = Point(point.x + dirx, point.y + diry, point.z + dirz)
+
+        if (!(listOfDroplets.contains(newPoint)) && !(totalListOfEmptyPoints.contains(newPoint))) listOfNewPoints.add(newPoint)
+
     }
 
-   return step
+    if (listOfNewPoints.isNotEmpty()) {
+        totalListOfEmptyPoints.addAll(listOfNewPoints)
+
+        for (p in listOfNewPoints) {
+            expand(step + 1, maxStep, p, listOfDroplets)
+        }
+    }
+
+    return step
 
 }
 
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
+    val stringList = File("src/main/kotlin/day18_2022", "inputtest.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map { it.toInt() }

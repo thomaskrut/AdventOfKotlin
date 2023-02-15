@@ -20,7 +20,6 @@ internal class AKtTest {
             Point(x, y, z)
         }
 
-
         assertTrue(Point(1, 1, 1).isAdjacent(Point(1, 1, 0), droplets))
 
 
