@@ -2,6 +2,8 @@ import java.io.File
 
 var filledPoints = mutableListOf<Point>()
 
+var visitedPoints = mutableListOf<Point>()
+
 var outerSurfaces = 0
 
 data class Point(val x: Int, val y: Int, val z: Int) {
@@ -74,9 +76,85 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
     )
     println(droplet)
 
-    return listOfEmptyPoints
+    return listOfEmptyPoints.filter { p -> checkIfExposedToAir(p, listOfDroplets) }
 
 }
+
+fun checkIfExposedToAir(p: Point, listOfDroplets: List<Point>): Boolean {
+
+    visitedPoints.clear()
+    val result = move(p, listOfDroplets)
+    println(result)
+    return result > 10
+
+}
+
+fun move(p: Point, listOfDroplets: List<Point>): Int {
+
+    if (maxOf(p.x, p.y, p.z) > 10) return maxOf(p.x, p.y, p.z)
+    if (minOf(p.x, p.y, p.z) < 0) return maxOf(p.x, p.y, p.z)
+
+    visitedPoints.add(p)
+
+    val pointsToVisit = mutableListOf<Point>()
+
+    if (!visitedPoints.contains(Point(p.x + 1, p.y, p.z)) && !listOfDroplets.contains(
+            Point(
+                p.x + 1,
+                p.y,
+                p.z
+            )
+        )
+    ) pointsToVisit.add(Point(p.x + 1, p.y, p.z))
+    if (!visitedPoints.contains(Point(p.x - 1, p.y, p.z)) && !listOfDroplets.contains(
+            Point(
+                p.x - 1,
+                p.y,
+                p.z
+            )
+        )
+    ) pointsToVisit.add(Point(p.x - 1, p.y, p.z))
+    if (!visitedPoints.contains(Point(p.x, p.y + 1, p.z)) && !listOfDroplets.contains(
+            Point(
+                p.x,
+                p.y + 1,
+                p.z
+            )
+        )
+    ) pointsToVisit.add(Point(p.x, p.y + 1, p.z))
+    if (!visitedPoints.contains(Point(p.x, p.y - 1, p.z)) && !listOfDroplets.contains(
+            Point(
+                p.x,
+                p.y - 1,
+                p.z
+            )
+        )
+    ) pointsToVisit.add(Point(p.x, p.y - 1, p.z))
+    if (!visitedPoints.contains(Point(p.x, p.y, p.z + 1)) && !listOfDroplets.contains(
+            Point(
+                p.x,
+                p.y,
+                p.z + 1
+            )
+        )
+    ) pointsToVisit.add(Point(p.x, p.y, p.z + 1))
+    if (!visitedPoints.contains(Point(p.x, p.y, p.z - 1)) && !listOfDroplets.contains(
+            Point(
+                p.x,
+                p.y,
+                p.z - 1
+            )
+        )
+    ) pointsToVisit.add(Point(p.x, p.y, p.z - 1))
+
+    if (pointsToVisit.isNotEmpty()) {
+        return pointsToVisit.maxOf { point ->
+            move(point, listOfDroplets)
+        }
+    }
+    return maxOf(p.x, p.y, p.z)
+}
+
 
 fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
 
@@ -91,24 +169,66 @@ fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
 
     filledPoints.add(currentPoint)
 
-    if ((currentPoint.x > -4) && (!filledPoints.contains(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.x < 24 && (!filledPoints.contains(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.y > -4 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.y < 24 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.z > z -3 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y,currentPoint.z - 1), z, listOfDroplets)
-    if (currentPoint.z < z + 3 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), z, listOfDroplets)
-
+    if ((currentPoint.x > -4) && (!filledPoints.contains(
+            Point(
+                currentPoint.x - 1,
+                currentPoint.y,
+                currentPoint.z
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.x < 24 && (!filledPoints.contains(
+            Point(
+                currentPoint.x + 1,
+                currentPoint.y,
+                currentPoint.z
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.y > -4 && (!filledPoints.contains(
+            Point(
+                currentPoint.x,
+                currentPoint.y - 1,
+                currentPoint.z
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.y < 24 && (!filledPoints.contains(
+            Point(
+                currentPoint.x,
+                currentPoint.y + 1,
+                currentPoint.z
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.z > z - 3 && (!filledPoints.contains(
+            Point(
+                currentPoint.x,
+                currentPoint.y,
+                currentPoint.z - 1
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1), z, listOfDroplets)
+    if (currentPoint.z < z + 3 && (!filledPoints.contains(
+            Point(
+                currentPoint.x,
+                currentPoint.y,
+                currentPoint.z + 1
+            )
+        ))
+    ) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), z, listOfDroplets)
 
 
 }
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
+    val stringList = File("src/main/kotlin/day18_2022", "inputtest.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map {
-            it.toInt() }
+            it.toInt()
+        }
         Point(x, y, z)
     }
 
@@ -117,17 +237,6 @@ fun main() {
     println(totalNumberOfExposedSides)
 
     println()
-
-    for (z in -5..35) {
-
-        fillWithWater(Point(-5, -5, z), z, droplets)
-        println(outerSurfaces)
-    }
-
-
-
-
-    println(outerSurfaces)
 
 
 }
