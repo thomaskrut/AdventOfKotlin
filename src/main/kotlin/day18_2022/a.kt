@@ -78,41 +78,37 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
 
 }
 
-tailrec fun fillWithWater(currentPoint: Point, listOfDroplets: List<Point>) {
-
-    if (filledPoints.contains(currentPoint)) {
-        println("already visited")
-        return
-    }
+fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
 
     if (listOfDroplets.contains(currentPoint)) {
-        println(outerSurfaces)
+
         outerSurfaces++
         return
     }
 
-
+    //if (listOfDroplets.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1))) outerSurfaces++
+    //if (listOfDroplets.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1))) outerSurfaces++
 
     filledPoints.add(currentPoint)
 
-    //println(currentPoint)
+    if ((currentPoint.x > -4) && (!filledPoints.contains(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.x < 24 && (!filledPoints.contains(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.y > -4 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.y < 24 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), z, listOfDroplets)
+    if (currentPoint.z > z -3 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y,currentPoint.z - 1), z, listOfDroplets)
+    if (currentPoint.z < z + 3 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), z, listOfDroplets)
 
 
-    if ((currentPoint.x > 0) && (!filledPoints.contains(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), listOfDroplets)
-    if (currentPoint.x < 21 && (!filledPoints.contains(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z)))) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), listOfDroplets)
-    if (currentPoint.y > 0 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), listOfDroplets)
-    if (currentPoint.y < 21 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z)))) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), listOfDroplets)
-    if (currentPoint.z > 0 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1), listOfDroplets)
-    if (currentPoint.z < 21 && (!filledPoints.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1)))) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), listOfDroplets)
 
 }
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day18_2022", "inputtest.txt").readLines()
+    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
 
     val droplets = stringList.map { s ->
-        val (x, y, z) = s.split(",").map { it.toInt() }
+        val (x, y, z) = s.split(",").map {
+            it.toInt() }
         Point(x, y, z)
     }
 
@@ -122,7 +118,13 @@ fun main() {
 
     println()
 
-    fillWithWater(Point(0, 0, 0), droplets)
+    for (z in -5..35) {
+
+        fillWithWater(Point(-5, -5, z), z, droplets)
+        println(outerSurfaces)
+    }
+
+
 
 
     println(outerSurfaces)
