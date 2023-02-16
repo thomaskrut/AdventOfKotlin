@@ -83,16 +83,17 @@ fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Po
 fun checkIfExposedToAir(p: Point, listOfDroplets: List<Point>): Boolean {
 
     visitedPoints.clear()
-    val result = move(p, listOfDroplets)
+    val result = move(p, listOfDroplets, 1)
     println(result)
-    return result > 10
+    return result > 9000
 
 }
 
-fun move(p: Point, listOfDroplets: List<Point>): Int {
+fun move(p: Point, listOfDroplets: List<Point>, maxStep: Int): Int {
 
-    if (maxOf(p.x, p.y, p.z) > 10) return maxOf(p.x, p.y, p.z)
-    if (minOf(p.x, p.y, p.z) < 0) return maxOf(p.x, p.y, p.z)
+    if (maxStep > 2000) return 9999
+    if (maxOf(p.x, p.y, p.z) > 25) return 9999
+    if (minOf(p.x, p.y, p.z) < -1) return 9999
 
     visitedPoints.add(p)
 
@@ -149,10 +150,12 @@ fun move(p: Point, listOfDroplets: List<Point>): Int {
 
     if (pointsToVisit.isNotEmpty()) {
         return pointsToVisit.maxOf { point ->
-            move(point, listOfDroplets)
+            move(point, listOfDroplets, maxStep + 1)
         }
+    } else {
+        return maxStep
     }
-    return maxOf(p.x, p.y, p.z)
+
 }
 
 
@@ -223,7 +226,7 @@ fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day18_2022", "inputtest.txt").readLines()
+    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map {
