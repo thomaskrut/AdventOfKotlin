@@ -9,7 +9,7 @@ internal class AKtTest {
     @Test
     fun testCountNumberOfExposedSides() {
 
-        val stringList = File("src/day18_2022.main/kotlin/day18_2022", "inputtest.txt").readLines()
+        val stringList = File("src/day18_2022.day9_2022.main/kotlin/day18_2022", "inputtest.txt").readLines()
 
         val droplets = stringList.map { s ->
             val (x, y, z) = s.split(",").map { it.toInt() }

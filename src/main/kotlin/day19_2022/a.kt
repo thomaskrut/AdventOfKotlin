@@ -44,7 +44,7 @@ class Blueprint {
 
 fun main() {
 
-    val stringList = File("src/day18_2022.main/kotlin/day19_2022", "input.txt").readLines()
+    val stringList = File("src/day18_2022.day9_2022.main/kotlin/day19_2022", "input.txt").readLines()
 
     var total = 0
 

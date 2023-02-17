@@ -97,7 +97,7 @@ println(s.reversed())
 
 fun main() {
 
-    val input = File("src/day18_2022.main/kotlin/day25_2022", "input.txt").readLines()
+    val input = File("src/day18_2022.day9_2022.main/kotlin/day25_2022", "input.txt").readLines()
 
     var sum: Long = 0
 
