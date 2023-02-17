@@ -1,14 +1,13 @@
 package day20_2022
 
 import getNthNumberAfterValue
+import day18_2022.move
 import move
 import java.io.File
-import kotlin.math.abs
-
 
 
 fun main() {
-    val stringList = File("src/main/kotlin/day20_2022", "input.txt").readLines()
+    val stringList = File("src/day18_2022.main/kotlin/day20_2022", "input.txt").readLines()
 
     val intList = stringList.map { s -> s.toLong()}
 

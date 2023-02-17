@@ -1,8 +1,12 @@
+package day18_2022
+
 import java.io.File
 
 var filledPoints = mutableListOf<Point>()
 
 var visitedPoints = mutableListOf<Point>()
+
+
 
 var outerSurfaces = 0
 
@@ -91,7 +95,8 @@ fun checkIfExposedToAir(p: Point, listOfDroplets: List<Point>): Boolean {
 
 fun move(p: Point, listOfDroplets: List<Point>, maxStep: Int): Int {
 
-    if (maxStep > 2000) return 9999
+
+    if (maxStep > 1500) return 9999
     if (maxOf(p.x, p.y, p.z) > 25) return 9999
     if (minOf(p.x, p.y, p.z) < -1) return 9999
 
@@ -167,8 +172,8 @@ fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
         return
     }
 
-    //if (listOfDroplets.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1))) outerSurfaces++
-    //if (listOfDroplets.contains(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1))) outerSurfaces++
+    //if (listOfDroplets.contains(day18_2022.Point(currentPoint.x, currentPoint.y, currentPoint.z + 1))) day18_2022.getOuterSurfaces++
+    //if (listOfDroplets.contains(day18_2022.Point(currentPoint.x, currentPoint.y, currentPoint.z - 1))) day18_2022.getOuterSurfaces++
 
     filledPoints.add(currentPoint)
 
@@ -226,7 +231,7 @@ fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
 
 fun main() {
 
-    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
+    val stringList = File("src/day18_2022.main/kotlin/day18_2022", "input.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map {
