@@ -43,7 +43,7 @@ fun main() {
 
     // Lösning del 1:
     // Varje tal görs först om till long. Sedan plockar funktionen windowed ut 26 element i taget, och vart
-    // och ett av dessa skickas sedan tillsammans med delmänged av listan till min funktion isValid()
+    // och ett av dessa skickas sedan tillsammans med delmängd av listan till min funktion isValid()
     // som kollar av det mot resten av listan och ger true om summan av dem är lika med sista talet i listan.
     // Om det är false har vi hittat rätt svar.
 
