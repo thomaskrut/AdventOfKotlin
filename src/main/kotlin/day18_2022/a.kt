@@ -164,74 +164,9 @@ fun move(p: Point, listOfDroplets: List<Point>, maxStep: Int): Int {
 }
 
 
-fun fillWithWater(currentPoint: Point, z: Int, listOfDroplets: List<Point>) {
-
-    if (listOfDroplets.contains(currentPoint)) {
-
-        outerSurfaces++
-        return
-    }
-
-    //if (listOfDroplets.contains(day18_2022.Point(currentPoint.x, currentPoint.y, currentPoint.z + 1))) day18_2022.getOuterSurfaces++
-    //if (listOfDroplets.contains(day18_2022.Point(currentPoint.x, currentPoint.y, currentPoint.z - 1))) day18_2022.getOuterSurfaces++
-
-    filledPoints.add(currentPoint)
-
-    if ((currentPoint.x > -4) && (!filledPoints.contains(
-            Point(
-                currentPoint.x - 1,
-                currentPoint.y,
-                currentPoint.z
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x - 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.x < 24 && (!filledPoints.contains(
-            Point(
-                currentPoint.x + 1,
-                currentPoint.y,
-                currentPoint.z
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x + 1, currentPoint.y, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.y > -4 && (!filledPoints.contains(
-            Point(
-                currentPoint.x,
-                currentPoint.y - 1,
-                currentPoint.z
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x, currentPoint.y - 1, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.y < 24 && (!filledPoints.contains(
-            Point(
-                currentPoint.x,
-                currentPoint.y + 1,
-                currentPoint.z
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x, currentPoint.y + 1, currentPoint.z), z, listOfDroplets)
-    if (currentPoint.z > z - 3 && (!filledPoints.contains(
-            Point(
-                currentPoint.x,
-                currentPoint.y,
-                currentPoint.z - 1
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z - 1), z, listOfDroplets)
-    if (currentPoint.z < z + 3 && (!filledPoints.contains(
-            Point(
-                currentPoint.x,
-                currentPoint.y,
-                currentPoint.z + 1
-            )
-        ))
-    ) fillWithWater(Point(currentPoint.x, currentPoint.y, currentPoint.z + 1), z, listOfDroplets)
-
-
-}
-
 fun main() {
 
-    val stringList = File("src/day18_2022.day9_2022.main/kotlin/day18_2022", "input.txt").readLines()
+    val stringList = File("src/day18_2022.day9_2022.day22_2020.day5_2020.day9_2021.main/kotlin/day18_2022", "input.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map {

@@ -26,7 +26,7 @@ fun findRange(sumToFind: Long, list: List<Long>): List<Long> {
 
 
 fun main() {
-    val stringList = File("src/main/kotlin/day9_2020", "input.txt").readLines()
+    val stringList = File("src/day22_2020.day5_2020.day9_2021.main/kotlin/day9_2020", "input.txt").readLines()
 
     stringList.map { it.toLong() }.windowed(26, 1).forEach {
         if (!isValid(it.takeLast(1)[0], it.dropLast(1))) println(it.takeLast(1)[0])

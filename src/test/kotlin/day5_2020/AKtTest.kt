@@ -1,8 +1,5 @@
 package day5_2020
 
-import getColumn
-import getId
-import getRow
 import org.junit.jupiter.api.Test
 
 import org.junit.jupiter.api.Assertions.*

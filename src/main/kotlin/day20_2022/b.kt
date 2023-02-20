@@ -7,7 +7,7 @@ import java.io.File
 
 
 fun main() {
-    val stringList = File("src/day18_2022.day9_2022.main/kotlin/day20_2022", "input.txt").readLines()
+    val stringList = File("src/day18_2022.day9_2022.day22_2020.day5_2020.day9_2021.main/kotlin/day20_2022", "input.txt").readLines()
 
     val intList = stringList.map { s -> s.toLong()}
 
