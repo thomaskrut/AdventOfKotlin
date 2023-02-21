@@ -53,11 +53,19 @@ fun findSizeOfBasins(list: List<String>): List<Int> {
     val tempList = mutableListOf<Int>()
     val visitedPoints = mutableListOf<Point>()
 
-    list.forEachIndexed {
-        index1, s -> s.forEachIndexed { index2, c ->
-        if (!visitedPoints.contains(Point(index1, index2))) tempList.add(checkAdjacent(list, visitedPoints, index1, index2, 1))
+    list.forEachIndexed { index1, s ->
+        s.forEachIndexed { index2, c ->
+            if (!visitedPoints.contains(Point(index1, index2))) tempList.add(
+                checkAdjacent(
+                    list,
+                    visitedPoints,
+                    index1,
+                    index2,
+                    1
+                )
+            )
 
-    }
+        }
     }
     return tempList
 
@@ -69,10 +77,34 @@ fun checkAdjacent(list: List<String>, visitedPoints: MutableList<Point>, index1:
     visitedPoints.add(Point(index1, index2))
 
     var result = steps
-    if ((index1 > 0) && list[index1 - 1][index2] != '9' && !visitedPoints.contains(Point(index1 - 1, index2))) result += checkAdjacent(list, visitedPoints,index1 - 1, index2, steps)
-    if ((index1 < list.size - 1) && list[index1 + 1][index2] != '9' && !visitedPoints.contains(Point(index1 + 1, index2))) result += checkAdjacent(list, visitedPoints,index1 + 1, index2, steps)
-    if ((index2 > 0) && list[index1][index2 - 1] != '9' && !visitedPoints.contains(Point(index1, index2 - 1))) result += checkAdjacent(list, visitedPoints, index1, index2 - 1, steps)
-    if ((index2 < list[index1].length - 1) && list[index1][index2 + 1] != '9' && !visitedPoints.contains(Point(index1, index2 + 1))) result += checkAdjacent(list, visitedPoints, index1, index2 + 1, steps)
+    if ((index1 > 0) && list[index1 - 1][index2] != '9' && !visitedPoints.contains(
+            Point(
+                index1 - 1,
+                index2
+            )
+        )
+    ) result += checkAdjacent(list, visitedPoints, index1 - 1, index2, steps)
+    if ((index1 < list.size - 1) && list[index1 + 1][index2] != '9' && !visitedPoints.contains(
+            Point(
+                index1 + 1,
+                index2
+            )
+        )
+    ) result += checkAdjacent(list, visitedPoints, index1 + 1, index2, steps)
+    if ((index2 > 0) && list[index1][index2 - 1] != '9' && !visitedPoints.contains(
+            Point(
+                index1,
+                index2 - 1
+            )
+        )
+    ) result += checkAdjacent(list, visitedPoints, index1, index2 - 1, steps)
+    if ((index2 < list[index1].length - 1) && list[index1][index2 + 1] != '9' && !visitedPoints.contains(
+            Point(
+                index1,
+                index2 + 1
+            )
+        )
+    ) result += checkAdjacent(list, visitedPoints, index1, index2 + 1, steps)
 
     return result
 
@@ -84,9 +116,7 @@ fun main() {
     val stringList = File("src/main/kotlin/day9_2021", "input.txt").readLines()
 
     println("Lösning del 1:")
-    println(findLowPoints(stringList).sumOf {
-        it + 1
-    })
+    println(findLowPoints(stringList).sumOf { it + 1 })
 
     println()
 
