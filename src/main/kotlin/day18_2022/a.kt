@@ -2,13 +2,7 @@ package day18_2022
 
 import java.io.File
 
-var filledPoints = mutableListOf<Point>()
-
 var visitedPoints = mutableListOf<Point>()
-
-
-
-var outerSurfaces = 0
 
 data class Point(val x: Int, val y: Int, val z: Int) {
 
@@ -34,7 +28,7 @@ data class Point(val x: Int, val y: Int, val z: Int) {
 
 fun getAdjacentEmptyPoints(droplet: Point, listOfDroplets: List<Point>): List<Point> {
 
-    var listOfEmptyPoints = mutableListOf<Point>()
+    val listOfEmptyPoints = mutableListOf<Point>()
 
     if (!listOfDroplets.contains(Point(droplet.x + 1, droplet.y, droplet.z))) listOfEmptyPoints.add(
         Point(
@@ -166,7 +160,7 @@ fun move(p: Point, listOfDroplets: List<Point>, maxStep: Int): Int {
 
 fun main() {
 
-    val stringList = File("src/day18_2022.day9_2022.day22_2020.day5_2020.day9_2021.main/kotlin/day18_2022", "input.txt").readLines()
+    val stringList = File("src/main/kotlin/day18_2022", "input.txt").readLines()
 
     val droplets = stringList.map { s ->
         val (x, y, z) = s.split(",").map {

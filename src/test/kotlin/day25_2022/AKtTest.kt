@@ -28,8 +28,8 @@ internal class AKtTest {
 
     @Test
     fun testToSnafu() {
-        assertEquals(353L.toSnafu2(), "1=-1=")
-        assertEquals(1747L.toSnafu2(), "1=-0-2")
+        assertEquals(353L.toSnafu(), "1=-1=")
+        assertEquals(1747L.toSnafu(), "1=-0-2")
     }
 
 

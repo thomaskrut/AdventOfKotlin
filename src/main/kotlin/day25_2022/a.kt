@@ -28,34 +28,17 @@ fun String.toDecimal(): Long {
 
     }
 
-
     return result
 }
 
-fun Long.toSnafu2(): String =
+fun Long.toSnafu(): String =
     generateSequence(this) { (it + 2) / 5 }
         .takeWhile { it != 0L }
         .map { "012=-"[(it % 5).toInt()] }
         .joinToString("")
         .reversed()
 
-fun testIntegerDivision(input: Long) {
 
-    var result = (input + 2) / 5
-    var remainder = input % 5
-    var s = ""
-
-    while (result > 0) {
-
-        s += ("012=-"[remainder.toInt()])
-        remainder = result % 5
-        result = (result + 2) / 5
-
-    }
-
-println(s.reversed())
-
-}
 
 fun main() {
 
@@ -69,6 +52,6 @@ fun main() {
     }
     println("Summa: $sum")
 
-    println(sum.toSnafu2())
+    println(sum.toSnafu())
 
 }
