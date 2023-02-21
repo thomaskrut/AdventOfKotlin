@@ -20,21 +20,8 @@ import getNthNumberAfterValue
 import move
 import java.io.File
 
-class Element(var index: Int, var value: Long)
-
-// I min lösning lyckades jag inte använda lambdas på något vettigt sätt i funktionerna,
-// utan det blev mer old school iteration och if-satser (se fun.kt). Del 1 var förhållandevis
-// enkel; för att hålla red på den ursprungliga talföljden sparade jag den i en lista av Element-objekt,
-// där varje instans har sin ursprungliga position samt sitt värde. Den ursprungliga positionen
-// används sedan i lambdauttrycket nedan för att sortera talen inför iterationen och förflyttningarna.
-//
-// Del 2 blev mer komplicerad då talen blev väldigt stora. Först fick jag byta typ till Long, och sedan
-// fundera över om min lösning att flytta varje tal ett steg i taget i en loop behövde optimeras. Jag insåg
-// att då listan bara var 5000 tal lång skulle varje tal flyttas väldigt många "varv" helt i onödan (de är
-// nu i storleksordningen flera hundra miljarder, och varje enskild förflyttning på 5000 steg sätter talet
-// tillbaka på sin ursprungsposition). Jag hittade en lösning med modulus för att räkna ut hur många steg
-// varje tal faktiskt behöver flyttas. Lösningen går fortfarande ganska långsamt att räkna ut (flera minuter)
-// men ger i varje fall rätt svar.
+// Todd Ginsberg löser denna dag med väldigt lite kod, och på ett sätt som liknar min lösning, förutom
+// att han inte flyttar varje tal ett steg i taget.
 
 fun main() {
 
