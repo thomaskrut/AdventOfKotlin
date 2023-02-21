@@ -2,7 +2,7 @@ import day20_2022.Element
 import kotlin.math.abs
 
 fun MutableList<Element>.getNthNumberAfterValue(n: Int, value: Long): Long {
-    var index = this.indexOf(this.filter { e -> e.value == value }[0])
+    var index = this.indexOf(this.first { e -> e.value == value })
 
     repeat(n) {
         index++
@@ -19,15 +19,7 @@ fun MutableList<Element>.move(index: Int) {
     var elementToMove: Element
     var newIndex: Int
 
-    //println("Index: ${this[index].index}")
-    println(abs(this[index].value))
-    println(abs(this[index].value.toDouble()).toLong())
-    println(abs(this[index].value.toDouble()).toLong() % (this.size.toLong() - 1))
-
     val n = (abs(this[index].value.toDouble()).toLong() % (this.size.toLong() - 1)).toInt()
-
-
-    println(n)
 
     val moveOneStep = if (this[index].value > 0L) 1 else -1
 
@@ -60,8 +52,6 @@ fun MutableList<Element>.move(index: Int) {
         }
 
         this.add(newIndex, elementToMove)
-
-        //print("$currentIndex->$newIndex | ")
 
         currentIndex = newIndex
 
