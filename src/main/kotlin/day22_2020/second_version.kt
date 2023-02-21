@@ -27,6 +27,13 @@ import java.io.File
 // med två listor där jag jämför första talet och sedan sorterar dem till rätt lista. Dock
 // bytte jag ut min indexering med [] mot first() för ökad läsbarhet, samt refaktorerade ner
 // kortförflyttningarna till var sin rad med listOf()
+//
+// För att läsa in talen från filen hade jag tidigare hårdkodat antalet rader som läses in
+// per spelare, men hittade nu metoden takeWhile() som plockar rader så länge predikatet
+// uppfylls, samt dropWhile() som hoppar över rader så länge predikatet uppfylls.
+//
+// https://todd.ginsberg.com/post/advent-of-code/2020/day22/
+
 
 tailrec fun playRoundRecursive(player1: MutableList<Int>, player2: MutableList<Int>) {
 
@@ -46,8 +53,8 @@ fun calculateScoreWithFold(deck: MutableList<Int>) = deck.foldIndexed(0) { index
 fun main() {
 
     val stringList = File("src/main/kotlin/day22_2020", "input.txt").readLines()
-    val player1 = stringList.subList(1, 26).map { it.toInt() }.toMutableList()
-    val player2 = stringList.subList(28, 53).map { it.toInt() }.toMutableList()
+    val player1 = stringList.drop(1).takeWhile { it.isNotBlank() }.map { it.toInt() }.toMutableList()
+    val player2 = stringList.dropWhile {it != "Player 2:" }.drop(1).map { it.toInt() }.toMutableList()
 
     playRoundRecursive(player1, player2)
 
