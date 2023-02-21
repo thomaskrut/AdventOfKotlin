@@ -18,8 +18,7 @@ internal class AKtTest {
         assertEquals(player2, mutableListOf(8, 4, 7, 10))
         while (player1.isNotEmpty() && player2.isNotEmpty()) {
             playRound(player1, player2)
-            println(player1)
-            println(player2)
+
         }
         assertEquals(calculateScore(player2), 306)
 
