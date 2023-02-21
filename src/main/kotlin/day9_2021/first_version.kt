@@ -1,9 +1,28 @@
+/************************** --- Day 9: Smoke Basin --- **************************
+ *
+ * Detta pussel har en tvådimensionell karta över höjdskillnader som input, och del
+ * ett går ut på att hitta alla lägsta punkter, samt utföra en beräkning av 'risknivå'
+ * för dessa. Summan blir lösningen för del 1.
+ *
+ * För del två ska man hitta storleken på
+ * alla 'sänkor', dvs alla områden där samtliga höjdnivåer är lägre än 9. Storleken
+ * på de tre största sänkorna ska multipliceras för svaret på del 2.
+ *
+ *******************************************************************************/
+
 package day9_2021
 
 import java.io.File
 
 data class Point(val x: Int, val y: Int)
 
+// Jag hittar de lägsta punkterna genom att filtrera ut de punkter som har högre värden
+// på platserna ovanför, under och på varje sida. Dessa mappas sedan till en lista
+// av integers. Det blev nästlade lambdas och tyvärr kanske mindre läsbart än vad två
+// for-loopar skulle blivit. Predikatet för filterIndexed()-metoden blev dessutom extremt långt
+// då det innehåller flera if-satser i egenskap av uttryck styr vilka positioner som jämförs
+// (för att undvika IndexOutOfBoundsExceptions). Skulle även ha velat returnera listan direkt
+// utan att gå via result-variabeln, men hittade inte en lösning för det.
 fun findLowPoints(list: List<String>): List<Int> {
 
     val result = mutableListOf<Int>()
@@ -23,6 +42,12 @@ fun findLowPoints(list: List<String>): List<Int> {
     return result
 }
 
+// För att hitta storlekarna på de största sänkorna använder jag en rekursiv funktion, checkAdjacent().
+// Den utgår från varje position på kartan, och kollar sedan hur många steg den kan gå åt varje håll
+// innan den stöter på antingen en position som den redan testat eller en 9:a. Jag hittade inga passande
+// lambdas för de rekursiva anropen, utan fick nöja mig med if-satser. Det ackumulerade värdet från metoden
+// sparas i en lista som returneras av findSizeOfBasins(). Denna sorteras sedan, de tre största värdena plockas
+// ut, och multipliceras med varandra för svar på del 2.
 fun findSizeOfBasins(list: List<String>): List<Int> {
 
     val tempList = mutableListOf<Int>()
@@ -57,8 +82,8 @@ fun checkAdjacent(list: List<String>, visitedPoints: MutableList<Point>, index1:
 fun main() {
 
     val stringList = File("src/main/kotlin/day9_2021", "input.txt").readLines()
-    println(findLowPoints(stringList))
 
+    println("Lösning del 1:")
     println(findLowPoints(stringList).sumOf {
         it + 1
     })
@@ -70,6 +95,7 @@ fun main() {
         result *= it
     }
 
+    println("Lösning del 2:")
     println(result)
 
 }
