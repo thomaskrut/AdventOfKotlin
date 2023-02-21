@@ -17,11 +17,24 @@
 package day20_2022
 
 import getNthNumberAfterValue
-import move
 import java.io.File
+import kotlin.math.abs
 
 // Todd Ginsberg löser denna dag med väldigt lite kod, och på ett sätt som liknar min lösning, förutom
-// att han inte flyttar varje tal ett steg i taget.
+// att han inte flyttar varje tal ett steg i taget. Jag lånade mod()-funktionen han använder för att räkna
+// ut hur många steg ett tal ska flyttas, utan att flytta det ett steg i taget. Resultatet är ett program
+// som räknar ut svaret på millisekunder istället för minuter.
+
+fun MutableList<Element>.moveOptimized(index: Int) {
+
+    var currentIndex = index
+    val newIndex: Int
+    val elementToMove: Element = this.removeAt(currentIndex)
+    newIndex = (currentIndex + elementToMove.value).mod(size)
+    this.add(newIndex, elementToMove)
+
+}
+
 
 fun main() {
 
@@ -31,7 +44,7 @@ fun main() {
 
     println("Solving part 1...")
 
-    input.sortedWith(compareBy { it.index }).forEach { e -> input.move(input.indexOf(e)) }
+    input.sortedWith(compareBy { it.index }).forEach { e -> input.moveOptimized(input.indexOf(e)) }
 
     println(input.getNthNumberAfterValue(1000, 0) + input.getNthNumberAfterValue(2000, 0) + input.getNthNumberAfterValue(3000, 0))
 
@@ -39,9 +52,8 @@ fun main() {
 
     println("Solving part 2...")
 
-    repeat(10) { i ->
-        input2.sortedWith(compareBy { it.index }).forEach { e -> input2.move(input2.indexOf(e)) }
-        println("${(i + 1) * 10}% done")
+    repeat(10) {
+        input2.sortedWith(compareBy { it.index }).forEach { e -> input2.moveOptimized(input2.indexOf(e)) }
     }
 
     println(input2.getNthNumberAfterValue(1000, 0) + input2.getNthNumberAfterValue(2000, 0) + input2.getNthNumberAfterValue(3000, 0))
