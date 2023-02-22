@@ -8,6 +8,8 @@
  * alla 'sänkor', dvs alla områden där samtliga höjdnivåer är lägre än 9. Storleken
  * på de tre största sänkorna ska multipliceras för svaret på del 2.
  *
+ * https://adventofcode.com/2021/day/9
+ *
  *******************************************************************************/
 
 package day9_2021

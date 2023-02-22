@@ -1,21 +1,6 @@
-/************************** --- Day 9: Smoke Basin --- **************************
- *
- * Detta pussel har en tvådimensionell karta över höjdskillnader som input, och del
- * ett går ut på att hitta alla lägsta punkter, samt utföra en beräkning av 'risknivå'
- * för dessa. Summan blir lösningen för del 1.
- *
- * För del två ska man hitta storleken på
- * alla 'sänkor', dvs alla områden där samtliga höjdnivåer är lägre än 9. Storleken
- * på de tre största sänkorna ska multipliceras för svaret på del 2.
- *
- *******************************************************************************/
-
 package day9_2021
 
 import java.io.File
-
-
-
 
 fun findSizeOfBasinsOptimized(list: List<String>): List<Int> {
 
@@ -57,6 +42,7 @@ fun Point.getAdjacentPoints(): List<Point> = listOf(
 // jag istället hämtade varje punkts angränsande punkter som en lista inför varje rekursion, och sedan
 // filtrerade bort de som hade en 9:a och de som låg OutOfBounds. Sedan kunde
 // rekursionen utföras som tidigare och antalet steg ackumuleras.
+// https://todd.ginsberg.com/post/advent-of-code/2021/day9/
 
 fun checkAdjacentOptimized(list: List<String>, visitedPoints: MutableList<Point>, index1: Int, index2: Int, steps: Int): Int {
 

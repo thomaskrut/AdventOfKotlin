@@ -1,16 +1,3 @@
-/******************************* --- Day 9: Encoding Error --- *******************************
- *
- * Här ska man hitta det första talet i en sekvens som inte är summan av två av talen i de
- * senaste 25 talen av sekvensen (senaste 5 för testinputen). De två talen måste vara olika.
- *
- * För del 1 räcker det att hitta första talet.
- *
- * För del 2 ska man hitta en sammanhängande sekvens av tal som tillsammans utgör summan
- * av talet som hittades i del 1, och sedan lägga ihop det lägsta och högsta talet i denna
- * sekvens.
- *
- *********************************************************************************************/
-
 // Efter att ha tittat på Todd Ginsbergs lösning på denna har jag gjort viss refaktorering. Bland annat
 // konverterar jag till Long direkt vid filläsningen. Mer intressant är kanske användandet av takeWhile()
 // i lösningen på del 2, som bara tar med de tal som finns före summan som ska hittas. Funktionen var ny för
@@ -28,9 +15,9 @@ package day9_2020
 
 import java.io.File
 
-fun findRangeSecondVersion(sumToFind: Long, list: List<Long>): List<Long> {
+fun findRangeSecondVersion(sumToFind: Long, list: List<Long>): List<Long> =
 
-    return list.mapIndexedNotNull { index1, _ ->
+    list.mapIndexedNotNull { index1, _ ->
 
         list.mapIndexedNotNull { index2, _ ->
 
@@ -40,16 +27,14 @@ fun findRangeSecondVersion(sumToFind: Long, list: List<Long>): List<Long> {
     }.first()
 
 
-}
-
 fun main() {
     val stringList = File("src/main/kotlin/day9_2020", "input.txt").readLines().map { it.toLong() }
 
     var result = 0L
 
     stringList.windowed(26, 1).forEach {
-        if (!isValid(it.takeLast(1)[0], it.dropLast(1))) {
-            result = it.takeLast(1)[0]
+        if (!isValid(it.takeLast(1).first(), it.dropLast(1))) {
+            result = it.takeLast(1).first()
         }
     }
 

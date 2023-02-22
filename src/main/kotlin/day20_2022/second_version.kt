@@ -1,19 +1,3 @@
-/************************** --- Day 20: Grove Positioning System --- ***********************
- *
- * Pusslet går ut på att avkryptera en lista med tal. Varje tal i listan ska flyttas framåt
- * eller bakåt ett antal steg motsvarande sitt värde (negativt värde flyttar bakåt). Listan
- * är cirkulär så om ett tal hamnar sist är nästa position först, och tvärtom. Talen ska
- * flyttas i den ordning de stod i den ursprungliga listan.
- *
- * I del 1 får man rätt svar av att leta fram vilket tal som står på position 1000 efter 0,
- * position 2000 efter 0 och position 3000 efter 0 och summera dessa.
- *
- * I del 2 ska talen först multipliceras med 811589153, sedan flyttas 10 ggr (varje gång i
- * den ordning som stod i den ursprungliga listan) och sedan ska samma positioner som ovan
- * hittas och summeras.
- *
- ******************************************************************************************/
-
 package day20_2022
 
 import getNthNumberAfterValue
@@ -24,6 +8,8 @@ import kotlin.math.abs
 // att han inte flyttar varje tal ett steg i taget. Jag lånade mod()-funktionen han använder för att räkna
 // ut hur många steg ett tal ska flyttas, utan att flytta det ett steg i taget. Resultatet är ett program
 // som räknar ut svaret på millisekunder istället för minuter.
+// https://todd.ginsberg.com/post/advent-of-code/2022/day20/
+// Mer om % och mod(): https://medium.com/@alexvanyo/kotlin-functions-rem-and-mod-fa2e865304c3
 
 fun MutableList<Element>.moveOptimized(index: Int) {
 

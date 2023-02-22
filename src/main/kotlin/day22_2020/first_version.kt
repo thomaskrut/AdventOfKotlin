@@ -11,6 +11,8 @@
  * Del 2 hann jag inte lösa, mest för att jag tyckte att beskrivningen av de nya
  * reglerna var väldigt otydlig.
  *
+ * https://adventofcode.com/2020/day/22
+ *
  ************************************************************************************/
 
 package day22_2020

@@ -12,6 +12,8 @@
  * den ordning som stod i den ursprungliga listan) och sedan ska samma positioner som ovan
  * hittas och summeras.
  *
+ * https://adventofcode.com/2022/day/20
+ *
  ******************************************************************************************/
 
 package day20_2022

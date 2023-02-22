@@ -1,21 +1,3 @@
-/************************* --- Day 5: Binary Boarding --- **************************
-
-https://adventofcode.com/2020/day/5
-
-Baserat på en sträng bokstäver (front, back, left, right) ska man sortera
-ut rätt platsnummer på ett flygplan. Först delas raderna in i främre eller
-bakre halvan av flygplanet, sedan den halvan i främre eller bakre raden,
-osv tills bara en rad återstår. Sedan gör man likadant med "kolumnera" och
-hittar rätt platsnummer.
-
-För del 1 ska man sortera ut alla platsnummer på
-alla boardingpass och hitta det högsta ID-numret.
-
-För del 2 ska man hitta sitt egen nummer (man har tappat sitt eget boardingpass)
-genom att kolla vilket som inte finns med i den långa listan med alla nummer.
-
- ************************************************************************************/
-
 package day5_2020
 
 import java.io.File
