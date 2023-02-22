@@ -5,13 +5,15 @@ import java.io.File
 // Jag snappade upp metoden fold() från Todd Ginsbergs lösning, eller i det här fallet
 // foldIndexed(), och använder den som ett alternativ till forEachIndexed() + sum())
 // för att räkna ut poängen. Fold låter oss ackumulera värden från varje lambda-anrop
-// vilket var användbart i det här fallet.
+// vilket var användbart i det här fallet, och med foldIndexed() får man även tillgång
+// till indexet för varje element, vilket behövdes här då kortets position i leken
+// styr vilken poäng det får.
 //
 // Vidare inspirerad av Todd gjorde jag om min playRound()-funktion till en rekursiv
 // funktion, om än med lite annan datastruktur än den Todd använder. Jag höll det enkelt
 // med två listor där jag jämför de översta korten och sedan sorterar dem till rätt lista. Dock
 // bytte jag ut min indexering med [] mot first() för ökad läsbarhet, samt refaktorerade ner
-// kortförflyttningarna till var sin rad med listOf()
+// kortförflyttningarna till var sin rad med hjälp av listOf()
 //
 // För att läsa in talen från filen hade jag tidigare hårdkodat antalet rader som läses in
 // per spelare, men hittade nu metoden takeWhile() som plockar rader så länge predikatet

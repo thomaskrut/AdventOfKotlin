@@ -9,15 +9,7 @@ fun findSizeOfBasinsOptimized(list: List<String>): List<Int> {
 
     list.forEachIndexed { index1, s ->
         s.forEachIndexed { index2, c ->
-            if (!visitedPoints.contains(Point(index1, index2))) tempList.add(
-                checkAdjacentOptimized(
-                    list,
-                    visitedPoints,
-                    index1,
-                    index2,
-                    1
-                )
-            )
+            if (!visitedPoints.contains(Point(index1, index2))) tempList.add(checkAdjacentOptimized(list, visitedPoints, index1, index2,1))
 
         }
     }
@@ -53,7 +45,7 @@ fun checkAdjacentOptimized(list: List<String>, visitedPoints: MutableList<Point>
     var result = steps
 
     Point(index1, index2).getAdjacentPoints()
-        .filter { p -> p.x >= 0 && p.x < list.size - 1 && p.y >= 0 && p.y < list[index1].length - 1 && list[p.x][p.y] != '9'}
+        .filter { p -> (p.x >= 0) && (p.x < list.size - 1) && (p.y >= 0) && (p.y < list[index1].length - 1) && (list[p.x][p.y] != '9')}
         .forEach {
             result += checkAdjacentOptimized(list, visitedPoints, it.x, it.y, steps)
         }
