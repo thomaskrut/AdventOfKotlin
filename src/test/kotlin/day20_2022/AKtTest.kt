@@ -1,6 +1,5 @@
 package day20_2022
 
-import day18_2022.move
 import getNthNumberAfterValue
 import move
 import org.junit.jupiter.api.Assertions.assertEquals
