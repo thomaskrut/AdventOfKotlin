@@ -9,7 +9,7 @@ fun findSizeOfBasinsOptimized(list: List<String>): List<Int> {
 
     list.forEachIndexed { index1, s ->
         s.forEachIndexed { index2, c ->
-            if (!visitedPoints.contains(Point(index1, index2))) tempList.add(checkAdjacentOptimized(list, visitedPoints, index1, index2,1))
+            if (!visitedPoints.contains(Point(index1, index2))) tempList.add(checkAdjacentOptimized(list, visitedPoints, index1, index2))
 
         }
     }
@@ -36,18 +36,18 @@ fun Point.getAdjacentPoints(): List<Point> = listOf(
 // rekursionen utföras som tidigare och antalet steg ackumuleras.
 // https://todd.ginsberg.com/post/advent-of-code/2021/day9/
 
-fun checkAdjacentOptimized(list: List<String>, visitedPoints: MutableList<Point>, index1: Int, index2: Int, steps: Int): Int {
+fun checkAdjacentOptimized(list: List<String>, visitedPoints: MutableList<Point>, index1: Int, index2: Int): Int {
 
     if (visitedPoints.contains(Point(index1, index2))) return 0
     if (list[index1][index2] == '9') return 0
     visitedPoints.add(Point(index1, index2))
 
-    var result = steps
+    var result = 1
 
     Point(index1, index2).getAdjacentPoints()
         .filter { p -> (p.x >= 0) && (p.x < list.size - 1) && (p.y >= 0) && (p.y < list[index1].length - 1) && (list[p.x][p.y] != '9')}
         .forEach {
-            result += checkAdjacentOptimized(list, visitedPoints, it.x, it.y, steps)
+            result += checkAdjacentOptimized(list, visitedPoints, it.x, it.y)
         }
 
     return result
