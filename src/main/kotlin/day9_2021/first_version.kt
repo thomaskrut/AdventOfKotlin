@@ -4,9 +4,9 @@
  * ett går ut på att hitta alla lägsta punkter, samt utföra en beräkning av 'risknivå'
  * för dessa. Summan blir lösningen för del 1.
  *
- * För del två ska man hitta storleken på
- * alla 'sänkor', dvs alla områden där samtliga höjdnivåer är lägre än 9. Storleken
- * på de tre största sänkorna ska multipliceras för svaret på del 2.
+ * För del två ska man hitta storleken på alla 'sänkor', dvs alla områden där
+ * samtliga höjdnivåer är lägre än 9. Storleken på de tre största sänkorna ska
+ * multipliceras för svaret på del 2.
  *
  * https://adventofcode.com/2021/day/9
  *

@@ -3,7 +3,7 @@
 Baserat på en sträng bokstäver (F = front, B = back, L = Left, R = right) ska
 man sortera ut rätt platsnummer på ett flygplan. Först delas raderna in i främre eller
 bakre halvan av flygplanet, sedan den halvan i främre eller bakre raden,
-osv tills bara en rad återstår. Sedan gör man likadant med "kolumnera" och
+osv tills bara en rad återstår. Sedan gör man likadant med kolumnerna och
 hittar rätt platsnummer.
 
 För del 1 ska man sortera ut alla platsnummer på alla boardingpass och hitta det

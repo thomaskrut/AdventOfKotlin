@@ -4,10 +4,10 @@
 // mig och kanske fastnar bättre i minnet när man använt den som del i en lösning.
 //
 // Jag gjorde även om min findRange()-funktion, se nedan. Jag lyckades använda en lambda liknande Todds med nästlade
-// loopar, istället för min ursprungliga for-loop, och som returnerar subListan efteråt istället för mitt i lambdan.
-// Dock fick jag inte till indexeringen av listorna med min mapIndexed-metoder (ville inte kopiera hans variant rakt av)
-// så jag gjorde en egen variant med en if-sats som expression till subList()-metoden, så att den inte använder ett
-// index2 som är mindre än index1.
+// mappningar, istället för min ursprungliga for-loop, och som returnerar subListan efteråt istället för mitt i lambdan.
+// Dock fick jag inte till indexeringen av listorna med mina mapIndexed-metoder (ville inte kopiera hans variant rakt av)
+// så jag gjorde en egen variant med en if-sats som expression i parameterlistan till subList()-metoden, så att den inte
+// använder ett index2 som är mindre än index1.
 //
 // https://todd.ginsberg.com/post/advent-of-code/2020/day9/
 

@@ -3,7 +3,7 @@
  * Här ska man hitta det första talet i en sekvens som inte är summan av två av talen i de
  * senaste 25 talen av sekvensen (senaste 5 för testinputen). De två talen måste vara olika.
  *
- * För del 1 räcker det att hitta första talet.
+ * För del 1 räcker det att hitta första talet som inte är giltigt enligt ovan.
  *
  * För del 2 ska man hitta en sammanhängande sekvens av tal som tillsammans utgör summan
  * av talet som hittades i del 1, och sedan lägga ihop det lägsta och högsta talet i denna
